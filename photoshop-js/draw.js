@@ -1,11 +1,11 @@
+var currentStyle = 'brush';
 var currentColor = 'red';
-var currentWeight = 10;
+var container = document.querySelector('#container');
 
-function Line(initialPoint, color, weight) {
+function Line(initialPoint, color) {
   var _this = this;
   var vertices = [initialPoint];
   this.color = color;
-  this.weight = weight;
   this.segments = [];
 
   this.addPoint = function(point) {
@@ -17,16 +17,15 @@ function Line(initialPoint, color, weight) {
     var length = (dX ** 2 + dY ** 2) ** 0.5
     var rad = Math.atan(dX / -dY);
     var lineSegment = document.createElement('div');
-    lineSegment.className = 'canvas line-segment';
+    lineSegment.className = 'canvas ' + currentStyle;
     lineSegment.style.height = length + 'px';
     lineSegment.style.width = 0;
-    lineSegment.style.border = (weight / 2) + 'px solid ' + color;
-    lineSegment.style.borderRadius = weight / 2 + 'px';
+    lineSegment.style.borderColor = currentColor;
     lineSegment.style.transform = 'rotate(' + rad + 'rad)';
     lineSegment.style.left = midpoint[0] + 'px';
     lineSegment.style.top = midpoint[1] - length / 2 + 'px';
     _this.segments.push(lineSegment);
-    document.body.append(lineSegment);
+    container.append(lineSegment);
   }
   this.remove = function() {
     while(_this.segments.length > 0) {
@@ -38,12 +37,12 @@ function Line(initialPoint, color, weight) {
 var isDown = false;
 var lines = [];
 var currentLine;
-document.addEventListener('mousedown', function(event) {
+container.addEventListener('mousedown', function(event) {
   isDown = true;
-  currentLine = new Line([event.clientX, event.clientY], currentColor, currentWeight)
+  currentLine = new Line([event.clientX, event.clientY], currentColor)
   lines.push(currentLine);
 });
-document.addEventListener('mousemove', function(event) {
+container.addEventListener('mousemove', function(event) {
   if(isDown == true) {
     currentLine.addPoint([event.clientX, event.clientY]);
   }
@@ -52,7 +51,14 @@ document.addEventListener('mouseup', function() {
   isDown = false;
 });
 
-function remove() {
-  lines[0].remove();
-  lines.shift();
+function removeLatest() {
+  if(lines.length) {
+    lines[lines.length - 1].remove();
+    lines.pop();
+  }
+}
+function clear() {
+  for(var i = 0; i < lines.length; i++) {
+    removeLatest();
+  }
 }

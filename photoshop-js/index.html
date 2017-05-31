@@ -1,10 +1,20 @@
 <!DOCTYPE html>
+
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <nav>
+    <h1>Photoshop.js</h1>
+    <button onclick="removeLatest()">ctrl-z</button>
+    <button onclick="currentStyle='pencil'">pencil</button>
+    <button onclick="currentStyle='brush'">brush</button>
+    <button onclick="currentStyle='spray-can'">spray-can</button>
+  </nav>
+  <div id="container">
+  </div>
   <script src="draw.js"></script>
-  <button onclick="remove()">undo</button>
 </body>
 </html>
