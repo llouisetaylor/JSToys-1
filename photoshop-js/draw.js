@@ -28,7 +28,7 @@ function Line(initialPoint, color) {
     container.append(lineSegment);
   }
   this.remove = function() {
-    while(_this.segments.length > 0) {
+    while (_this.segments.length > 0) {
       _this.segments[0].remove();
       _this.segments.shift();
     }
@@ -43,7 +43,7 @@ container.addEventListener('mousedown', function(event) {
   lines.push(currentLine);
 });
 container.addEventListener('mousemove', function(event) {
-  if(isDown == true) {
+  if (isDown == true) {
     currentLine.addPoint([event.clientX, event.clientY]);
   }
 });
@@ -52,13 +52,13 @@ document.addEventListener('mouseup', function() {
 });
 
 function removeLatest() {
-  if(lines.length) {
+  if (lines.length) {
     lines[lines.length - 1].remove();
     lines.pop();
   }
 }
 function clear() {
-  for(var i = 0; i < lines.length; i++) {
+  for (var i = 0; i < lines.length; i++) {
     removeLatest();
   }
 }
