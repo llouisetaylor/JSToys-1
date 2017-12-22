@@ -10,13 +10,13 @@
 <body>
   <nav>
     <h1>Photoshop.js</h1>
-    <button onclick="removeLatest()">ctrl-z</button>
+    <button onclick="clearCanvas()">clear</button>
+    <button onclick="popLines()">ctrl-z</button>
     <button onclick="currentStyle='pencil'">pencil</button>
     <button onclick="currentStyle='brush'">brush</button>
     <button onclick="currentStyle='spray-can'">spray-can</button>
   </nav>
-  <div id="container">
-  </div>
+  <div id="container"></div>
   <script src="draw.js"></script>
 </body>
 

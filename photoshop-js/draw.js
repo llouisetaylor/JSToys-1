@@ -2,63 +2,63 @@ var currentStyle = 'brush';
 var currentColor = 'red';
 var container = document.querySelector('#container');
 
-function Line(initialPoint, color) {
-  var _this = this;
-  var vertices = [initialPoint];
-  this.color = color;
-  this.segments = [];
-
-  this.addPoint = function(point) {
-    var lastPoint = vertices[vertices.length - 1];
-    vertices.push(point);
-    var dX = point[0] - lastPoint[0];
-    var dY = point[1] - lastPoint[1];
-    var midpoint = [(point[0] + lastPoint[0]) / 2, (point[1] + lastPoint[1]) / 2];
-    var length = (dX ** 2 + dY ** 2) ** 0.5
-    var rad = Math.atan(dX / -dY);
-    var lineSegment = document.createElement('div');
-    lineSegment.className = 'canvas ' + currentStyle;
-    lineSegment.style.height = length + 'px';
-    lineSegment.style.width = 0;
-    lineSegment.style.borderColor = currentColor;
-    lineSegment.style.transform = 'rotate(' + rad + 'rad)';
-    lineSegment.style.left = midpoint[0] + 'px';
-    lineSegment.style.top = midpoint[1] - length / 2 + 'px';
-    _this.segments.push(lineSegment);
-    container.append(lineSegment);
-  }
-  this.remove = function() {
-    while (_this.segments.length > 0) {
-      _this.segments[0].remove();
-      _this.segments.shift();
+class Line {
+    constructor(initialPoint, color) {
+        this.vertices = [initialPoint];
+        this.edges = [];
+        this.color = color;
+        this.previousVertex = initialPoint;
+        this.currentStyle = currentStyle;
+        this.div = document.createElement('div');
+        container.appendChild(this.div);
     }
-  }
+
+    addPoint(nextPoint) {
+        const prevPoint = this.vertices[this.vertices.length - 1];
+        const dX = nextPoint[0] - prevPoint[0];
+        const dY = nextPoint[1] - prevPoint[1];
+        const midpoint = [(nextPoint[0] + prevPoint[0]) / 2, (nextPoint[1] + prevPoint[1]) / 2];
+        const length = (dX ** 2 + dY ** 2) ** 0.5;
+        const radians = Math.atan(dX / -dY);
+
+        const newEdge = document.createElement('div');
+        newEdge.className = `canvas line ${this.currentStyle}`
+        newEdge.style.height = `${length}px`;
+        newEdge.style.borderColor = this.color;
+        newEdge.style.transform = `rotate(${radians}rad)`;
+        newEdge.style.left = `${midpoint[0]}px`;
+        newEdge.style.top = `${midpoint[1] - length / 2}px`;
+
+        this.div.appendChild(newEdge);
+        this.vertices.push(nextPoint);
+        this.edges.push(newEdge);
+    }
 }
-var isDown = false;
-var lines = [];
-var currentLine;
+
+let isDown = false;
+const lines = [];
 container.addEventListener('mousedown', function(event) {
-  isDown = true;
-  currentLine = new Line([event.clientX, event.clientY], currentColor)
-  lines.push(currentLine);
+    isDown = true;
+    lines.push(new Line([event.clientX, event.clientY], currentColor));
 });
 container.addEventListener('mousemove', function(event) {
-  if (isDown == true) {
-    currentLine.addPoint([event.clientX, event.clientY]);
-  }
+    if (isDown == true) {
+        lines[lines.length - 1].addPoint([event.clientX, event.clientY]);
+    }
+    event.preventDefault();
 });
 document.addEventListener('mouseup', function() {
-  isDown = false;
+    isDown = false;
 });
 
-function removeLatest() {
-  if (lines.length) {
-    lines[lines.length - 1].remove();
-    lines.pop();
-  }
+function popLines() {
+    if (lines.length) {
+        lines[lines.length - 1].div.remove();
+        lines.pop();
+    }
 }
-function clear() {
-  for (var i = 0; i < lines.length; i++) {
-    removeLatest();
-  }
+function clearCanvas() {
+    while (lines.length) {
+        popLines();
+    }
 }

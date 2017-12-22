@@ -26,6 +26,10 @@ nav {
   position: absolute;
 }
 
+.line {
+  width: 0;
+}
+
 .brush {
   border-style: solid;
   border-width: 5px;
