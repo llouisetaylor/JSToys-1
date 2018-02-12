@@ -1,5 +1,4 @@
 var currentStyle = 'brush';
-var currentColor = 'red';
 var container = document.querySelector('#container');
 
 class Line {
@@ -39,7 +38,8 @@ let isDown = false;
 const lines = [];
 container.addEventListener('mousedown', function(event) {
     isDown = true;
-    lines.push(new Line([event.clientX, event.clientY], currentColor));
+    const hue = document.getElementById('colour').value;
+    lines.push(new Line([event.clientX, event.clientY], `hsl(${hue}, 100%, 50%)`));
 });
 container.addEventListener('mousemove', function(event) {
     if (isDown == true) {
