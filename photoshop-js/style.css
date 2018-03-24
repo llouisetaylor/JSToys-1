@@ -29,23 +29,3 @@ nav {
 .line {
   width: 0;
 }
-
-.brush {
-  border-style: solid;
-  border-width: 5px;
-  border-radius: 10px;
-  opacity: 1;
-}
-
-.pencil {
-  border-style: solid;
-  border-width: 1px;
-  opacity: 1;
-}
-
-.spray-can {
-  border-style: solid;
-  border-width: 20px;
-  border-radius: 40px;
-  opacity: 0.1;
-}
