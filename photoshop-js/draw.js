@@ -2,13 +2,12 @@ let currentStyle = 'brush';
 const CONTAINER = document.querySelector('#container');
 
 class Line {
-    constructor(initialPoint, color) {
+    constructor(initialPoint) {
         this.vertices = [initialPoint];
         this.edges = [];
-        this.color = color;
         this.previousVertex = initialPoint;
         this.div = document.createElement('div');
-        this.div.style.color = color;
+        this.div.style.color = document.getElementById('colour').value;
         this.div.className = currentStyle;
         CONTAINER.appendChild(this.div);
     }

@@ -45,13 +45,13 @@ nav {
 
 .brush {
   position: relative;
-  left: 5px;
-  top: 5px;
+  left: 6px;
+  top: 6px;
 }
 .brush * {
   color: inherit;
-  border: 5px solid currentColor;
-  border-radius: 5px;
+  border: 6px solid currentColor;
+  border-radius: 6px;
 }
 
 .spray-can * {
