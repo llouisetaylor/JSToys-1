@@ -45,8 +45,8 @@ nav {
 
 .brush {
   position: relative;
-  left: 6px;
-  top: 6px;
+  left: -6px;
+  top: -6px;
 }
 .brush * {
   color: inherit;
