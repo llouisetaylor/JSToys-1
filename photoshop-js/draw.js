@@ -1,16 +1,15 @@
-const currentBorderWidth = '10'
-const currentOpacity = '1'
+let currentStyle = 'brush';
 const CONTAINER = document.querySelector('#container');
 
 class Line {
-    constructor(initialPoint, color, borderWidth, opacity) {
+    constructor(initialPoint, color) {
         this.vertices = [initialPoint];
         this.edges = [];
         this.color = color;
-        this.borderWidth = borderWidth;
-        this.opacity = opacity;
         this.previousVertex = initialPoint;
         this.div = document.createElement('div');
+        this.div.style.color = color;
+        this.div.className = currentStyle;
         CONTAINER.appendChild(this.div);
     }
 
@@ -27,12 +26,9 @@ class Line {
 
         Object.assign(newEdge.style, {
             height: `${length}px`,
-            border: `${this.borderWidth}px solid ${this.color}`,
-            borderRadius: `${this.borderWidth}px`,
             transform: `rotate(${radians}rad)`,
-            left: `${midpoint[0] - this.borderWidth}px`,
-            top: `${midpoint[1] - this.borderWidth - length / 2}px`,
-            opacity: this.opacity
+            left: `${midpoint[0]}px`,
+            top: `${midpoint[1] - length / 2}px`,
         });
 
         this.div.appendChild(newEdge);
@@ -46,7 +42,7 @@ const lines = [];
 CONTAINER.addEventListener('mousedown', function(event) {
     isDown = true;
     const hue = document.getElementById('colour').value;
-    lines.push(new Line([event.clientX, event.clientY], `hsl(${hue}, 100%, 50%)`, currentBorderWidth, currentOpacity));
+    lines.push(new Line([event.clientX, event.clientY], `hsl(${hue}, 100%, 50%)`));
 });
 CONTAINER.addEventListener('mousemove', function(event) {
     if (isDown == true) {

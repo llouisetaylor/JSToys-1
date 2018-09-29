@@ -14,6 +14,9 @@ body {
 }
 
 nav {
+  position:  fixed;
+  z-index: 1;
+  width: 100%;
   height: 60px;
   background-color: #eee;
 }
@@ -28,4 +31,30 @@ nav {
 
 .line {
   width: 0;
+}
+
+.pencil {
+  left: -0.5px;
+  top: -0.5px;
+}
+.pencil * {
+  color: inherit;
+  border: 1px solid currentColor;
+  border-radius: 1px;
+}
+
+.brush {
+  position: relative;
+  left: 5px;
+  top: 5px;
+}
+.brush * {
+  color: inherit;
+  border: 5px solid currentColor;
+  border-radius: 5px;
+}
+
+.spray-can * {
+  color: inherit;
+  box-shadow: 0 0 120px 40px currentColor;
 }
