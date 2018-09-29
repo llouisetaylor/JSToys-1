@@ -1,6 +1,6 @@
-var currentBorderWidth = '10'
-var currentOpacity = '1'
-var container = document.querySelector('#container');
+const currentBorderWidth = '10'
+const currentOpacity = '1'
+const CONTAINER = document.querySelector('#container');
 
 class Line {
     constructor(initialPoint, color, borderWidth, opacity) {
@@ -11,7 +11,7 @@ class Line {
         this.opacity = opacity;
         this.previousVertex = initialPoint;
         this.div = document.createElement('div');
-        container.appendChild(this.div);
+        CONTAINER.appendChild(this.div);
     }
 
     addPoint(nextPoint) {
@@ -24,13 +24,16 @@ class Line {
 
         const newEdge = document.createElement('span');
         newEdge.className = 'canvas line';
-        newEdge.style.height = `${length}px`;
-        newEdge.style.border = `${this.borderWidth}px solid ${this.color}`;
-        newEdge.style.borderRadius = `${this.borderWidth}px`;
-        newEdge.style.transform = `rotate(${radians}rad)`;
-        newEdge.style.left = `${midpoint[0] - this.borderWidth}px`;
-        newEdge.style.top = `${midpoint[1] - this.borderWidth - length / 2}px`;
-        newEdge.style.opacity = this.opacity;
+
+        Object.assign(newEdge.style, {
+            height: `${length}px`,
+            border: `${this.borderWidth}px solid ${this.color}`,
+            borderRadius: `${this.borderWidth}px`,
+            transform: `rotate(${radians}rad)`,
+            left: `${midpoint[0] - this.borderWidth}px`,
+            top: `${midpoint[1] - this.borderWidth - length / 2}px`,
+            opacity: this.opacity
+        });
 
         this.div.appendChild(newEdge);
         this.vertices.push(nextPoint);
@@ -40,12 +43,12 @@ class Line {
 
 let isDown = false;
 const lines = [];
-container.addEventListener('mousedown', function(event) {
+CONTAINER.addEventListener('mousedown', function(event) {
     isDown = true;
     const hue = document.getElementById('colour').value;
     lines.push(new Line([event.clientX, event.clientY], `hsl(${hue}, 100%, 50%)`, currentBorderWidth, currentOpacity));
 });
-container.addEventListener('mousemove', function(event) {
+CONTAINER.addEventListener('mousemove', function(event) {
     if (isDown == true) {
         lines[lines.length - 1].addPoint([event.clientX, event.clientY]);
     }
