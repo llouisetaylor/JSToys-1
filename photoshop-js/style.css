@@ -22,7 +22,10 @@ nav {
 }
 
 #container {
-  height: 100%
+  height: 100%;
+  background-position: center;
+  background-image: url('https://i.pinimg.com/originals/54/fb/70/54fb7090a64309bc53df56c70cd593cc.jpg');
+  background-repeat: no-repeat;
 }
 
 .canvas {
